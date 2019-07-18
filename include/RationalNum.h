@@ -9,11 +9,13 @@
 #ifndef BRUTEFORCEFRAC_RATIONALNUM_H
 #define BRUTEFORCEFRAC_RATIONALNUM_H
 
-#include "IntFactorList/IntFactorList.h"
 #include "IntFactor.h"
+#include "IntFactorVector.h"
 
 #include <cstdint>
 
+#include <vector>
+using std::vector;
 
 namespace bruteforcefrac {
 
@@ -29,26 +31,11 @@ private:
 public:
     RationalNum(int64_t numerator, int64_t denominator) {
         this->numerator = numerator;
-        // this->numerator->primeFactorize( (numerator < 0) ? -1*numerator : numerator );
-
         this->denominator = denominator;
-        // this->denominator->primeFactorize( (denominator < 0) ? -1*denominator : denominator );
 
         if ( (numerator >= 0 && denominator >= 0) || (numerator < 0 && denominator < 0)) {
             isPositive = true;
         } else isPositive = false;
-    }
-
-    IntFactorList* getNumeratorPrimeFactors() {
-        IntFactorList* numeratorFactorList = new IntFactorList();
-        numeratorFactorList->primeFactorize( numerator );
-        return numeratorFactorList;
-    }
-
-    IntFactorList* getDenominatorPrimeFactors() {
-        IntFactorList* denominatorFactorList = new IntFactorList();
-        denominatorFactorList->primeFactorize( denominator );
-        return denominatorFactorList;
     }
 
     uint64_t getNumeratorValue() {return numerator;}
@@ -65,37 +52,37 @@ public:
         if (numerator > 1 && denominator > 1)
         {
             // Prime factorize the numerator and denominator
-            IntFactorList* numeratorFactorList = getNumeratorPrimeFactors();
-            IntFactorList* denominatorFactorList = getDenominatorPrimeFactors();
+            vector<IntFactor*>* numeratorPrimeFactors = primeFactorizeToVector(numerator);
+            vector<IntFactor*>* denominatorPrimeFactors = primeFactorizeToVector(denominator);
 
             // Pick the side with the least factors to be the base list for comparison
-            IntFactorList *compareBaseList = (numeratorFactorList->getSize() <= numeratorFactorList->getSize())
-                    ? numeratorFactorList
-                    : denominatorFactorList;
+            // that is, this is the list we loop first in
+            vector<IntFactor*>* compareBase = (numeratorPrimeFactors->size() <= denominatorPrimeFactors->size())
+                    ? numeratorPrimeFactors
+                    : denominatorPrimeFactors;
 
             // The other side is the target list
-            IntFactorList *compareTargetList = (compareBaseList == numeratorFactorList)
-                    ? denominatorFactorList
-                    : numeratorFactorList;
+            vector<IntFactor*>* compareTarget = (compareBase == numeratorPrimeFactors)
+                    ? denominatorPrimeFactors
+                    : numeratorPrimeFactors;
 
             // Preparing to loop through compareBaseList and cancel common factors
-            // between compareBaseList and compareTargetList
-            IntFactorListNode* currentNode = compareBaseList->getHead();
+            // between compareBaseList and compareTargetList. This changes
+            // numeratorPrimeFactors and denominatorPrimeFactors.
             IntFactor* factorFromBaseList;
-
-            for (currentNode; currentNode != nullptr; currentNode = currentNode->front) {
-                factorFromBaseList = currentNode->factor;
+            for (unsigned long i = 0; i < compareBase->size(); i++) {
+                factorFromBaseList = (*compareBase)[i];
 
                 // cancelWithFactor has side effects that also affect factorFromBaseList
-                compareTargetList->cancelWithFactor( factorFromBaseList );
+                cancelFacVecWithFactor(compareTarget, factorFromBaseList);
 
             }
 
-            numerator = numeratorFactorList->getValue();
-            denominator = denominatorFactorList->getValue();
+            numerator = getValue(numeratorPrimeFactors);
+            denominator = getValue(denominatorPrimeFactors);
 
-            delete numeratorFactorList;
-            delete denominatorFactorList;
+            delete numeratorPrimeFactors;
+            delete denominatorPrimeFactors;
         }
     }
 
