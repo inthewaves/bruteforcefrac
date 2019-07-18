@@ -56,10 +56,7 @@ public:
     }
 
     ~IntFactorTreeNode() {
-        if (factor) {
-            delete factor;
-        }
-
+        delete factor;
     }
 
     IntFactor* getFactor() {return factor;}
@@ -84,7 +81,7 @@ public:
      */
     IntFactorTreeNode* primeFactorize(IntFactor* fac) {
         //  newNode is the root of the prime factor tree for \p fac
-        IntFactorTreeNode *newNode = new IntFactorTreeNode(fac);
+        auto newNode = new IntFactorTreeNode(fac);
         uint64_t valToFac = newNode->factor->getValue();
 
         //  Don't try to factor one, zero, or anything negative
@@ -99,8 +96,8 @@ public:
         }
 
         //  Otherwise, valToFac is composite
-        IntFactor* primeFactorOfFac = new IntFactor(primeFactor, 1);
-        IntFactor* otherFactorOfFac = new IntFactor(valToFac / primeFactor, 1);
+        auto primeFactorOfFac = new IntFactor(primeFactor, 1);
+        auto otherFactorOfFac = new IntFactor(valToFac / primeFactor, 1);
 
         newNode->leftNode = new IntFactorTreeNode(primeFactorOfFac);
 

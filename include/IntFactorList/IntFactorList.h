@@ -138,7 +138,7 @@ public:
                         // we don't use it anymore, so stop memory leaks
                         delete newFactor;
                     } else {
-                        IntFactorListNode *newNode = new IntFactorListNode(newFactor);
+                        auto newNode = new IntFactorListNode(newFactor);
                         newNode->back = tail;
                         tail->front = newNode;
                         tail = newNode;

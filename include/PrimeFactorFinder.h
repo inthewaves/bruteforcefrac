@@ -28,7 +28,7 @@ namespace bffrac {
  */
 uint64_t getSmallestPrimeFactor(uint64_t valToFactor) {
     //  if valToFac is a composite integer then it has a prime divisor <= sqrt(valToFac)
-    uint64_t stoppingValue = (uint64_t) floor(sqrt(valToFactor));
+    auto stoppingValue = (uint64_t) floor(sqrt(valToFactor));
 
     //  Even numbers are clearly not prime
     if (valToFactor % 2 == 0) return 2;

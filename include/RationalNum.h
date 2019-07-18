@@ -30,10 +30,19 @@ private:
 
 public:
     RationalNum(int64_t numerator, int64_t denominator) {
-        this->numerator = numerator;
-        this->denominator = denominator;
+        this->numerator = (uint64_t)numerator;
+        this->denominator = (uint64_t)denominator;
 
         if ( (numerator >= 0 && denominator >= 0) || (numerator < 0 && denominator < 0)) {
+            isPositive = true;
+        } else isPositive = false;
+    }
+
+    RationalNum(int64_t numerator) {
+        this->numerator = (uint64_t)numerator;
+        this->denominator = 1;
+
+        if (numerator >= 0) {
             isPositive = true;
         } else isPositive = false;
     }
@@ -69,10 +78,7 @@ public:
             // Preparing to loop through compareBaseList and cancel common factors
             // between compareBaseList and compareTargetList. This changes
             // numeratorPrimeFactors and denominatorPrimeFactors.
-            IntFactor* factorFromBaseList;
-            for (unsigned long i = 0; i < compareBase->size(); i++) {
-                factorFromBaseList = (*compareBase)[i];
-
+            for (IntFactor* factorFromBaseList : *compareBase) {
                 // cancelWithFactor has side effects that also affect factorFromBaseList
                 cancelFacVecWithFactor(compareTarget, factorFromBaseList);
             }

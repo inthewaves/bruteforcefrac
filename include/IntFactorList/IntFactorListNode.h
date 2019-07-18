@@ -25,7 +25,7 @@ public:
     }
 
     ~IntFactorListNode() {
-        if (factor) delete factor;
+        delete factor;
     }
 
     IntFactor* factor;

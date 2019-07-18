@@ -139,7 +139,7 @@ namespace bffrac {
      * @return A pointer to a vector<IntFactor*>
      */
     std::vector<IntFactor*>* primeFactorizeToVector(uint64_t valToFactor) {
-        std::vector<IntFactor*>* vecOfPrimes = new std::vector<IntFactor*>;
+        auto vecOfPrimes = new std::vector<IntFactor*>;
 
         // Don't bother trying to factor numbers less than 3
         if (valToFactor <= 3) {
@@ -170,18 +170,17 @@ namespace bffrac {
      * Returns the product of all the in a vector<IntFactor*>.
      * @param facvec - The pointer to a vector<IntFactor*> to get the value of.
      * @return The product of all the factors.
-     *         Returns -1 if @p facvec is null.
-     *         Returns 0 if @p facvec is empty.
+     *         Returns 0 if @p facvec is null or empty.
      *
      */
     uint64_t getValue(std::vector<IntFactor*>* facvec) {
-        uint64_t returnVal = -1;
+        uint64_t returnVal = 0;
         if (facvec) {
             if (facvec->empty()) return 0;
 
             returnVal = 1;
-            for (unsigned long i = 0; i<facvec->size(); i++) {
-                returnVal *= (*facvec)[i]->getValue();
+            for (IntFactor* x : *facvec) {
+                returnVal *= x->getValue();
             }
         }
         return returnVal;
