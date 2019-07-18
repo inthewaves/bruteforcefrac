@@ -13,9 +13,9 @@
 #include "IntFactorVector.h"
 
 #include <cstdint>
+#include <cstdio>
 
 #include <vector>
-using std::vector;
 
 namespace bruteforcefrac {
 
@@ -52,17 +52,17 @@ public:
         if (numerator > 1 && denominator > 1)
         {
             // Prime factorize the numerator and denominator
-            vector<IntFactor*>* numeratorPrimeFactors = primeFactorizeToVector(numerator);
-            vector<IntFactor*>* denominatorPrimeFactors = primeFactorizeToVector(denominator);
+            std::vector<IntFactor*>* numeratorPrimeFactors = primeFactorizeToVector(numerator);
+            std::vector<IntFactor*>* denominatorPrimeFactors = primeFactorizeToVector(denominator);
 
             // Pick the side with the least factors to be the base list for comparison
             // that is, this is the list we loop first in
-            vector<IntFactor*>* compareBase = (numeratorPrimeFactors->size() <= denominatorPrimeFactors->size())
+            std::vector<IntFactor*>* compareBase = (numeratorPrimeFactors->size() <= denominatorPrimeFactors->size())
                     ? numeratorPrimeFactors
                     : denominatorPrimeFactors;
 
             // The other side is the target list
-            vector<IntFactor*>* compareTarget = (compareBase == numeratorPrimeFactors)
+            std::vector<IntFactor*>* compareTarget = (compareBase == numeratorPrimeFactors)
                     ? denominatorPrimeFactors
                     : numeratorPrimeFactors;
 
@@ -75,7 +75,6 @@ public:
 
                 // cancelWithFactor has side effects that also affect factorFromBaseList
                 cancelFacVecWithFactor(compareTarget, factorFromBaseList);
-
             }
 
             numerator = getValue(numeratorPrimeFactors);

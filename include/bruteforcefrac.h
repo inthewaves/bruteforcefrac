@@ -9,8 +9,8 @@
 #ifndef BRUTEFORCEFRAC_BRUTEFORCEFRAC_H
 #define BRUTEFORCEFRAC_BRUTEFORCEFRAC_H
 
-#include "IntFactorTree/IntFactorTree.h"
-#include "IntFactorList/IntFactorList.h"
+#include "IntFactor.h"
+#include "IntFactorVector.h"
 #include "RationalNum.h"
 
 #endif //BRUTEFORCEFRAC_BRUTEFORCEFRAC_H

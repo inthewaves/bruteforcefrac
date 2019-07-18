@@ -18,8 +18,9 @@
 
 #include <cstdint>
 
+#include <iostream>
+
 #include <vector>
-using std::vector;
 
 namespace bruteforcefrac {
 
@@ -28,17 +29,31 @@ namespace bruteforcefrac {
      *
      * @param facvec - The pointer of a vector<IntFactor*> to search.
      * @param baseToFind - The base we are looking for inside @p facvec.
-     * @return The index of the first factor with a base of @p baseToFind,
-     *          or -1 if not found.
+     * @return The pointer to the first vector in @p facvec with base of @p baseToFind.
+     *         Returns nullptr if not found.
      */
-    unsigned long findIndexOfFactorWithBase(vector<IntFactor*>* facvec, uint64_t baseToFind) {
+    IntFactor* findFactorWithBase(std::vector<IntFactor*>* facvec, uint64_t baseToFind) {
         // reference vector, not a copy
-        vector<IntFactor*>& refVec = *facvec;
+        std::vector<IntFactor*>& refVec = *facvec;
 
         for (unsigned long i = 0; i < facvec->size(); i++) {
-            if (refVec[i]->getBase() == baseToFind) return i;
+            if (refVec[i]->getBase() == baseToFind) return refVec[i];
         }
-        return -1;
+
+        return nullptr;
+    }
+
+    void printFacVec(std::vector<IntFactor*>* facvec) {
+        if (!facvec->empty()) {
+            std::cout << (*facvec)[0]->getBase() << "^" << (*facvec)[0]->getExponent();
+
+            for (unsigned long i = 1; i < facvec->size(); i++) {
+                std::cout << " * " << (*facvec)[i]->getBase() << "^" << (*facvec)[i]->getExponent();
+            }
+
+            std::cout << std::endl;
+        }
+
     }
 
     /**
@@ -66,12 +81,11 @@ namespace bruteforcefrac {
      *                  This method has side effects on this divisor:
      *                  it will also cause a cancellation effect on it
      */
-    void cancelFacVecWithFactor(vector<IntFactor*>* facvec, IntFactor* divisor) {
+    void cancelFacVecWithFactor(std::vector<IntFactor*>* facvec, IntFactor* divisor) {
         if (divisor && facvec && !facvec->empty()) {
-            unsigned long indexOfCommonFactor = findIndexOfFactorWithBase(facvec, divisor->getBase());
-            if (indexOfCommonFactor >= 0) {
-                IntFactor* commonFactor = (*facvec)[indexOfCommonFactor];
+            IntFactor* commonFactor = findFactorWithBase(facvec, divisor->getBase());
 
+            if (commonFactor) {
                 uint64_t smallerExponent = (commonFactor->getExponent() <= divisor->getExponent())
                                            ? commonFactor->getExponent()
                                            : divisor->getExponent();
@@ -102,7 +116,7 @@ namespace bruteforcefrac {
      * @param facvec - The pointer to a vector<IntFactor*> to push to.
      * @param baseToPush - The base to push into the vector.
      */
-    void factor_push_back(vector<IntFactor*>* facvec, uint64_t baseToPush) {
+    void factor_push_back(std::vector<IntFactor*>* facvec, uint64_t baseToPush) {
         if (facvec) {
             if (facvec->empty()) {
                 facvec->push_back(new IntFactor(baseToPush,1));
@@ -124,8 +138,8 @@ namespace bruteforcefrac {
      * @param valToFactor - The positive integer to factor into prime factors
      * @return A pointer to a vector<IntFactor*>
      */
-    vector<IntFactor*>* primeFactorizeToVector(uint64_t valToFactor) {
-        vector<IntFactor*>* vecOfPrimes = new vector<IntFactor*>;
+    std::vector<IntFactor*>* primeFactorizeToVector(uint64_t valToFactor) {
+        std::vector<IntFactor*>* vecOfPrimes = new std::vector<IntFactor*>;
 
         // Don't bother trying to factor numbers less than 3
         if (valToFactor <= 3) {
@@ -160,7 +174,7 @@ namespace bruteforcefrac {
      *         Returns 0 if @p facvec is empty.
      *
      */
-    uint64_t getValue(vector<IntFactor*>* facvec) {
+    uint64_t getValue(std::vector<IntFactor*>* facvec) {
         uint64_t returnVal = -1;
         if (facvec) {
             if (facvec->empty()) return 0;

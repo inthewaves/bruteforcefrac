@@ -3,22 +3,25 @@ This is a header-only C++ library for simplifying rational numbers using brute-f
 factorization. The motivation for this project is to refresh myself on data structures and 
 to lay a foundation for a matrix row operations program.
 
-The program contains two data structures implementing prime factorization. These data
-structures were created for review purposes.
+The library uses vectors to hold prime factors. 
+
+The library also contains two unused data structures implementing recursive prime factorization 
+(IntFactorList and IntFactorTree). These data structures were created for review purposes.
 
 ## Using the library
 ### Minimal working example 
-Put all the header files in [`include`](include/) directory into 
-one place, and make a `mwe.cpp` file  (or copy it from the [`examples/`](examples/) directory) with the following code:
+Put all the header files in [`include`](include/) directory into one place, and make a `mwe.cpp` 
+file  (or copy it from the [`examples/`](examples/) directory) with the following code:
 
 ```c++
+#include "bruteforcefrac.h"
+
 #include <cmath>
 #include <cstdio>
 
 #include <cstdint>
 #include <cinttypes>
 
-#include "bruteforcefrac.h"
 
 int main() {
     printf("What do you want to factor? >>> ");
@@ -26,17 +29,9 @@ int main() {
     uint64_t factorme = 0;
     scanf("%" PRIu64, &factorme);
 
-    // "IntFactorTree.h"
-    bruteforcefrac::IntFactorTree userTree = bruteforcefrac::IntFactorTree(factorme);
-    printf("Prime factorizing %" PRIu64 " with tree:\n", factorme);
-    userTree.primeFactorize();
-    userTree.printLeaves();
-
-    // "IntFactorList.h"
-    bruteforcefrac::IntFactorList factorList = bruteforcefrac::IntFactorList();
-    factorList.primeFactorize(factorme);
-    printf("Prime factorizing %" PRIu64 " with list:\n", factorme);
-    factorList.print();
+    // "IntFactorVector.h"
+    std::vector<bruteforcefrac::IntFactor*>* primeFactors = bruteforcefrac::primeFactorizeToVector(factorme);
+    bruteforcefrac::printFacVec(primeFactors);
 
     // "RationalNum.h"
     int64_t numer = 0; int64_t denom = 0;
@@ -46,33 +41,29 @@ int main() {
 
         printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue() );
         testFrac.simplify();
-        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue() );
+        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(),
+                testFrac.getDenominatorValue() );
     }
 }
-
 ```
 
-A compilation and a test run are as follows:
+A compilation and a test run is as follows:
 
 ```console
 $ g++ mwe.cpp && ./a.out
 What do you want to factor? >>> 5435345354
-Prime factorizing 5435345354 with tree:
-2^1 2609^1 1041653^1 
-Prime factorizing 5435345354 with list:
-2^1 2609^1 1041653^1 (Size: 3)
-
+2^1 * 2609^1 * 1041653^1
 Enter a fraction in the form a/b >>> 1480/23456
 testFrac: 1480/23456
 simplified testFrac: 185/2932
 ```
 
 ### Speed
-For normal usage with relatively small numbers, the factoring and simplification works 
-fine on modern home computers.
+Prime factorization is done with trial division. For normal usage with relatively small numbers, the 
+factoring and simplification works fast on modern home computers.
 
-But take the prime number 12764787846358441471. With the `mwe-list.cpp` and `mwe-tree.cpp` 
-files (found under the [examples/](examples/) directory), we have the following with 
+Take the prime number 12764787846358441471. Using the old implementations from the `mwe-list.cpp` and 
+`mwe-tree.cpp` files (found under the [examples/](examples/) directory), we have the following with 
 the `time` command:
 ```console
 $ g++ -Wall -O3 mwe-tree.cpp -o mwe-tree 
