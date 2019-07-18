@@ -1,10 +1,11 @@
+#include "bruteforcefrac.h"
+
 #include <cmath>
 #include <cstdio>
 
 #include <cstdint>
 #include <cinttypes>
 
-#include "bruteforcefrac.h"
 
 int main() {
     printf("What do you want to factor? >>> ");
@@ -12,17 +13,9 @@ int main() {
     uint64_t factorme = 0;
     scanf("%" PRIu64, &factorme);
 
-    // "IntFactorTree.h"
-    bruteforcefrac::IntFactorTree userTree = bruteforcefrac::IntFactorTree(factorme);
-    printf("Prime factorizing %" PRIu64 " with tree:\n", factorme);
-    userTree.primeFactorize();
-    userTree.printLeaves();
-
-    // "IntFactorList.h"
-    bruteforcefrac::IntFactorList factorList = bruteforcefrac::IntFactorList();
-    factorList.primeFactorize(factorme);
-    printf("Prime factorizing %" PRIu64 " with list:\n", factorme);
-    factorList.print();
+    // "IntFactorVector.h"
+    std::vector<bruteforcefrac::IntFactor*>* primeFactors = bruteforcefrac::primeFactorizeToVector(factorme);
+    bruteforcefrac::printFacVec(primeFactors);
 
     // "RationalNum.h"
     int64_t numer = 0; int64_t denom = 0;
@@ -32,6 +25,7 @@ int main() {
 
         printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue() );
         testFrac.simplify();
-        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue() );
+        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(),
+                testFrac.getDenominatorValue() );
     }
 }
