@@ -30,16 +30,16 @@ int main() {
     scanf("%" PRIu64, &factorme);
 
     // "IntFactorVector.h"
-    std::vector<bruteforcefrac::IntFactor*>* primeFactors = bruteforcefrac::primeFactorizeToVector(factorme);
-    bruteforcefrac::printFacVec(primeFactors);
+    std::vector<bffrac::IntFactor*>* primeFactors = bffrac::primeFactorizeToVector(factorme);
+    bffrac::printFacVec(primeFactors);
 
     // "RationalNum.h"
     int64_t numer = 0; int64_t denom = 0;
     printf("\nEnter a fraction in the form a/b >>> ");
     if (scanf("%" PRIi64 "/%" PRIi64, &numer, &denom) == 2) {
-        bruteforcefrac::RationalNum testFrac = bruteforcefrac::RationalNum(numer,denom);
+        bffrac::RationalNum testFrac = bffrac::RationalNum(numer,denom);
 
-        printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue() );
+        printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue());
         testFrac.simplify();
         printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(),
                 testFrac.getDenominatorValue() );

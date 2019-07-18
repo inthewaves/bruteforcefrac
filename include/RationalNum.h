@@ -17,7 +17,7 @@
 
 #include <vector>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 /**
  * A class for rational numbers

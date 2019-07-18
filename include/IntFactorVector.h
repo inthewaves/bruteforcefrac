@@ -22,7 +22,7 @@
 
 #include <vector>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
     /**
      * Finds the index of a factor with a base of @p baseToFind

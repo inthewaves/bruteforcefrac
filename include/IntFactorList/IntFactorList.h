@@ -19,7 +19,7 @@
 #include <cstdint>
 #include <cinttypes>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 /**
  * A a doubly-linked list containing IntFactors,
@@ -269,6 +269,6 @@ public:
     }
 };
 
-} //namespace bruteforcefrac
+} //namespace bffrac
 
 #endif //BRUTEFORCEFRAC_INTFACTORLIST_H

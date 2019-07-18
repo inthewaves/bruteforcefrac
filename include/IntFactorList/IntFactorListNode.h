@@ -11,7 +11,7 @@
 
 #include "IntFactor.h"
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 /**
  * A node for a doubly-linked list containing IntFactors
@@ -34,6 +34,6 @@ public:
 
 };
 
-} //namespace bruteforcefrac
+} //namespace bffrac
 
 #endif //BRUTEFORCEFRAC_INTFACTORLISTNODE_H

@@ -12,7 +12,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 /**
  * An IntFactor is made up of a base and an exponent.
@@ -47,6 +47,6 @@ namespace bruteforcefrac {
         void setBase(uint64_t base) {this->base = base;}
     };
 
-} //namespace bruteforcefrac
+} //namespace bffrac
 
 #endif //BRUTEFORCEFRAC_INTFACTOR_H

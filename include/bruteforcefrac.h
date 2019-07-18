@@ -1,4 +1,4 @@
-/*  bruteforcefrac.h
+/*  bffrac.h
  *  This file is a part of the bruteforcefrac library.
  *
  *  Copyright (c) 2019 Paul Ngo

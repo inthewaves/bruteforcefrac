@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <cinttypes>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 class IntFactorTree {
 private:

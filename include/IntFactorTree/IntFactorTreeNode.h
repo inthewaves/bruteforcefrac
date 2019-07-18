@@ -20,7 +20,7 @@
 #include "IntFactor.h"
 #include "PrimeFactorFinder.h"
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 class IntFactorTreeNode {
 private:
@@ -119,6 +119,6 @@ public:
     }
 };
 
-} //namespace bruteforcefrac
+} //namespace bffrac
 
 #endif //BRUTEFORCEFRAC_INTFACTORTREENODE_H

@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <cinttypes>
 
-namespace bruteforcefrac {
+namespace bffrac {
 
 /**
  * @brief Returns the smallest prime factor of the param.
@@ -44,6 +44,6 @@ uint64_t getSmallestPrimeFactor(uint64_t valToFactor) {
     return valToFactor;
 }
 
-} //namespace bruteforcefrac
+} //namespace bffrac
 
 #endif //BRUTEFORCEFRAC_PRIMEFACTORFINDER_H
