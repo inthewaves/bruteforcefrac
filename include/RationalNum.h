@@ -30,8 +30,9 @@ private:
 
 public:
     RationalNum(int64_t numerator, int64_t denominator) {
-        this->numerator = (uint64_t)numerator;
-        this->denominator = (uint64_t)denominator;
+        // Take the absolute value of the params
+        this->numerator = (uint64_t)(numerator >= 0 ? numerator : -1*numerator);
+        this->denominator = (uint64_t)(denominator >= 0 ? denominator : -1*denominator);
 
         if ( (numerator >= 0 && denominator >= 0) || (numerator < 0 && denominator < 0)) {
             isPositive = true;
@@ -39,7 +40,7 @@ public:
     }
 
     RationalNum(int64_t numerator) {
-        this->numerator = (uint64_t)numerator;
+        this->numerator = (uint64_t)(numerator >= 0 ? numerator : -1*numerator);
         this->denominator = 1;
 
         if (numerator >= 0) {
