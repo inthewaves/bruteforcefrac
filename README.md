@@ -1,9 +1,10 @@
 # bruteforcefrac
-This is a header-only C++17 library for simplifying rational numbers using brute-force prime 
-factorization. The motivation for this project is to refresh myself on data structures and 
-to lay a foundation for a matrix row operations program.
+This is a header-only C++17 library for a rational number class. The motivation for this project 
+is to refresh myself on data structures and to lay a foundation for a matrix row operations program.
 
-The library uses vectors to hold prime factors. 
+The library uses vectors to hold prime factors and also functions to factor a positive integer
+into its canonical form. The prime factors will be returned as a vector of IntFactors, another
+class in this library.
 
 The library also contains two unused data structures implementing recursive prime factorization 
 (IntFactorList and IntFactorTree). These data structures were created for review purposes.
@@ -66,7 +67,7 @@ simplified testFrac: 185/2932
 
 ### Speed
 Prime factorization is done with trial division. For normal usage with relatively small numbers, the 
-factoring and simplification works fast on modern home computers.
+factoring and rational number simplification works fast on modern home computers.
 
 Take the prime number 12764787846358441471. Using the old implementations from the `mwe-list.cpp` and 
 `mwe-tree.cpp` files (found under the [`examples/`](examples/) directory), we have the following with 
