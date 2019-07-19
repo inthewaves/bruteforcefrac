@@ -82,15 +82,9 @@ public:
         }
     }
 
-    uint64_t getNumeratorValue() {return numerator;}
+    uint64_t getNumerator() {return numerator;}
 
-    uint64_t getDenominatorValue() {return denominator;}
-
-    void setNumerator(uint64_t numerator) {this->numerator = numerator;}
-
-    void setDenominator(uint64_t denominator) {this->denominator = denominator;}
-
-    void setPositive(bool isPositive) {this->isPositive = isPositive;}
+    uint64_t getDenominator() {return denominator;}
 
     /**
      * Gets the sign of the rational number
@@ -98,6 +92,12 @@ public:
      *         otherwise returns false
      */
     bool positive() {return isPositive;}
+
+    void setNumerator(uint64_t numerator) {this->numerator = numerator;}
+
+    void setDenominator(uint64_t denominator) {this->denominator = denominator;}
+
+    void setPositive(bool isPositive) {this->isPositive = isPositive;}
 
     /**
      * Simplify the numerator and denominator via prime factorization.
@@ -216,7 +216,7 @@ public:
         if (toMult && toMult->denominator != 0) {
             numerator *= toMult->numerator;
             denominator *= toMult->denominator;
-            isPositive = (isPositive == toMult->isPositive) ? true : false;
+            isPositive = (isPositive == toMult->isPositive);
 
             simplify();
         }
@@ -253,11 +253,14 @@ public:
         }
     }
 
+    /**
+     * Mainly a debug print of the rational number
+     */
     void print() {
         if (isPositive)
-            printf("%" PRIu64 "/%" PRIu64 "\n", getNumeratorValue(), getDenominatorValue() );
+            printf("%" PRIu64 "/%" PRIu64 "\n", getNumerator(), getDenominator() );
         else
-            printf("-%" PRIu64 "/%" PRIu64 "\n", getNumeratorValue(), getDenominatorValue() );
+            printf("-%" PRIu64 "/%" PRIu64 "\n", getNumerator(), getDenominator() );
     }
 
 };

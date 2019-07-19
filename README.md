@@ -45,10 +45,10 @@ int main() {
     if (scanf("%" PRIi64 "/%" PRIi64, &numer, &denom) == 2) {
         bffrac::RationalNum testFrac = bffrac::RationalNum(numer,denom);
 
-        printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(), testFrac.getDenominatorValue());
+        printf("testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumerator(), testFrac.getDenominator());
         testFrac.simplify();
-        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumeratorValue(),
-                testFrac.getDenominatorValue() );
+        printf("simplified testFrac: %" PRIu64 "/%" PRIu64 "\n", testFrac.getNumerator(),
+                testFrac.getDenominator() );
     }
 }
 ```

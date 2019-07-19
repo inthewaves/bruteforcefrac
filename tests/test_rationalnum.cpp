@@ -25,12 +25,12 @@ SCENARIO( "Rational numbers have signs", "[rationalnum]" ) {
         auto testFrac2 = bffrac::RationalNum(5,-2);
 
         THEN( "the fractions are negative and their individual values are unsigned" ) {
-            REQUIRE(testFrac1.getNumeratorValue() == 5);
-            REQUIRE(testFrac1.getDenominatorValue() == 2);
+            REQUIRE(testFrac1.getNumerator() == 5);
+            REQUIRE(testFrac1.getDenominator() == 2);
             REQUIRE(!testFrac1.positive());
 
-            REQUIRE(testFrac2.getNumeratorValue() == 5);
-            REQUIRE(testFrac2.getDenominatorValue() == 2);
+            REQUIRE(testFrac2.getNumerator() == 5);
+            REQUIRE(testFrac2.getDenominator() == 2);
             REQUIRE(!testFrac2.positive());
         }
     }
@@ -40,12 +40,12 @@ SCENARIO( "Rational numbers have signs", "[rationalnum]" ) {
         auto testFrac4 = bffrac::RationalNum(5,2);
 
         THEN( "the fractions are positive and their individual values are unsigned" ) {
-            REQUIRE(testFrac3.getNumeratorValue() == 5);
-            REQUIRE(testFrac3.getDenominatorValue() == 2);
+            REQUIRE(testFrac3.getNumerator() == 5);
+            REQUIRE(testFrac3.getDenominator() == 2);
             REQUIRE(testFrac3.positive());
 
-            REQUIRE(testFrac4.getNumeratorValue() == 5);
-            REQUIRE(testFrac4.getDenominatorValue() == 2);
+            REQUIRE(testFrac4.getNumerator() == 5);
+            REQUIRE(testFrac4.getDenominator() == 2);
             REQUIRE(testFrac4.positive());
         }
     }
@@ -55,12 +55,12 @@ SCENARIO( "Rational numbers have signs", "[rationalnum]" ) {
         auto testFrac4 = bffrac::RationalNum(-40);
 
         THEN( "they are 40/1 and -40/1 respectively" ) {
-            REQUIRE(testFrac3.getNumeratorValue() == 40);
-            REQUIRE(testFrac3.getDenominatorValue() == 1);
+            REQUIRE(testFrac3.getNumerator() == 40);
+            REQUIRE(testFrac3.getDenominator() == 1);
             REQUIRE(testFrac3.positive());
 
-            REQUIRE(testFrac4.getNumeratorValue() == 40);
-            REQUIRE(testFrac4.getDenominatorValue() == 1);
+            REQUIRE(testFrac4.getNumerator() == 40);
+            REQUIRE(testFrac4.getDenominator() == 1);
             REQUIRE(!testFrac4.positive());
         }
     }
@@ -75,8 +75,8 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
             testFrac.simplify();
 
             THEN( "the numerator and denominator are reduced to 2/1" ) {
-                REQUIRE(testFrac.getNumeratorValue() == 2);
-                REQUIRE(testFrac.getDenominatorValue() == 1);
+                REQUIRE(testFrac.getNumerator() == 2);
+                REQUIRE(testFrac.getDenominator() == 1);
             }
         }
     }
@@ -89,8 +89,8 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
 
             THEN( "the numerator and denominator are reduced to -79588/45" ) {
                 REQUIRE(!testFrac.positive());
-                REQUIRE(testFrac.getNumeratorValue() == 79588);
-                REQUIRE(testFrac.getDenominatorValue() == 45);
+                REQUIRE(testFrac.getNumerator() == 79588);
+                REQUIRE(testFrac.getDenominator() == 45);
             }
         }
     }
@@ -102,8 +102,8 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
             testFrac.simplify();
 
             THEN( "it is unchanged as they're both prime" ) {
-                REQUIRE(testFrac.getNumeratorValue() == 17179869143);
-                REQUIRE(testFrac.getDenominatorValue() == 34359738337);
+                REQUIRE(testFrac.getNumerator() == 17179869143);
+                REQUIRE(testFrac.getDenominator() == 34359738337);
             }
         }
     }
@@ -115,8 +115,8 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
             testFrac.simplify();
 
             THEN( "it is unchanged as they're both relatively prime" ) {
-                REQUIRE(testFrac.getNumeratorValue() == 6005020);
-                REQUIRE(testFrac.getDenominatorValue() == 2568973);
+                REQUIRE(testFrac.getNumerator() == 6005020);
+                REQUIRE(testFrac.getDenominator() == 2568973);
             }
         }
     }
@@ -129,10 +129,10 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
             testFrac1.simplify(); testFrac2.simplify();
 
             THEN( "the numerators and denominators are unchanged" ) {
-                REQUIRE(testFrac1.getNumeratorValue() == 500);
-                REQUIRE(testFrac1.getDenominatorValue() == 1);
-                REQUIRE(testFrac2.getNumeratorValue() == 1);
-                REQUIRE(testFrac2.getDenominatorValue() == 500);
+                REQUIRE(testFrac1.getNumerator() == 500);
+                REQUIRE(testFrac1.getDenominator() == 1);
+                REQUIRE(testFrac2.getNumerator() == 1);
+                REQUIRE(testFrac2.getDenominator() == 500);
             }
         }
     }
@@ -145,8 +145,8 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
 
             THEN( "0/65 is changed into the nonpositive 0/1" ) {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 0);
-                REQUIRE(testFrac1.getDenominatorValue() == 1);
+                REQUIRE(testFrac1.getNumerator() == 0);
+                REQUIRE(testFrac1.getDenominator() == 1);
             }
         }
     }
@@ -161,8 +161,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get nonegative 0/1") {
                 REQUIRE(!testFrac0.positive());
-                REQUIRE(testFrac0.getNumeratorValue() == 0);
-                REQUIRE(testFrac0.getDenominatorValue() == 1);
+                REQUIRE(testFrac0.getNumerator() == 0);
+                REQUIRE(testFrac0.getDenominator() == 1);
             }
         }
 
@@ -173,8 +173,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get 22/15") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 22);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 22);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -185,8 +185,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get -22/15") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 22);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 22);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
     }
@@ -198,8 +198,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testAdditiveInverse1.positive());
-                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse1.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominator() == 1);
             }
         }
 
@@ -209,8 +209,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testAdditiveInverse1.positive());
-                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse1.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominator() == 1);
             }
         }
 
@@ -221,8 +221,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get 22/15") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 22);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 22);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -233,8 +233,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get -2/15") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 2);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 2);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
 
@@ -246,8 +246,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get 2/3") {
                 REQUIRE(testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 2);
-                REQUIRE(testFrac3.getDenominatorValue() == 3);
+                REQUIRE(testFrac3.getNumerator() == 2);
+                REQUIRE(testFrac3.getDenominator() == 3);
             }
         }
     }
@@ -261,8 +261,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testAdditiveInverse1.positive());
-                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse1.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominator() == 1);
             }
         }
 
@@ -273,8 +273,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testAdditiveInverse2.positive());
-                REQUIRE(testAdditiveInverse2.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse2.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse2.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse2.getDenominator() == 1);
             }
         }
 
@@ -285,8 +285,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get 2/15") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 2);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 2);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -297,8 +297,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get -22/15") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 22);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 22);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
 
@@ -310,8 +310,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get -2/3") {
                 REQUIRE(!testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 2);
-                REQUIRE(testFrac3.getDenominatorValue() == 3);
+                REQUIRE(testFrac3.getNumerator() == 2);
+                REQUIRE(testFrac3.getDenominator() == 3);
             }
         }
     }
@@ -324,14 +324,14 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
             THEN("we get -1/6") {
                 REQUIRE(!testNoSideEffect.positive());
-                REQUIRE(testNoSideEffect.getNumeratorValue() == 1);
-                REQUIRE(testNoSideEffect.getDenominatorValue() == 6);
+                REQUIRE(testNoSideEffect.getNumerator() == 1);
+                REQUIRE(testNoSideEffect.getDenominator() == 6);
             }
 
             AND_THEN("no side effects on -2/3") {
                 REQUIRE(!testNoSideEffect_add->positive());
-                REQUIRE(testNoSideEffect_add->getNumeratorValue() == 2);
-                REQUIRE(testNoSideEffect_add->getDenominatorValue() == 3);
+                REQUIRE(testNoSideEffect_add->getNumerator() == 2);
+                REQUIRE(testNoSideEffect_add->getDenominator() == 3);
             }
         }
     }
@@ -346,8 +346,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get 8/15") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 8);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 8);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -357,8 +357,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get -8/15") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 8);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 8);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
 
@@ -368,8 +368,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get 1/1") {
                 REQUIRE(testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 1);
-                REQUIRE(testFrac3.getDenominatorValue() == 1);
+                REQUIRE(testFrac3.getNumerator() == 1);
+                REQUIRE(testFrac3.getDenominator() == 1);
             }
         }
 
@@ -379,8 +379,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testFrac4.positive());
-                REQUIRE(testFrac4.getNumeratorValue() == 0);
-                REQUIRE(testFrac4.getDenominatorValue() == 1);
+                REQUIRE(testFrac4.getNumerator() == 0);
+                REQUIRE(testFrac4.getDenominator() == 1);
             }
         }
 
@@ -390,8 +390,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get -2/3") {
                 REQUIRE(!testFrac5.positive());
-                REQUIRE(testFrac5.getNumeratorValue() == 2);
-                REQUIRE(testFrac5.getDenominatorValue() == 3);
+                REQUIRE(testFrac5.getNumerator() == 2);
+                REQUIRE(testFrac5.getDenominator() == 3);
             }
         }
     }
@@ -404,8 +404,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get 2/3") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 2);
-                REQUIRE(testFrac1.getDenominatorValue() == 3);
+                REQUIRE(testFrac1.getNumerator() == 2);
+                REQUIRE(testFrac1.getDenominator() == 3);
             }
         }
     }
@@ -417,8 +417,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 0);
-                REQUIRE(testFrac1.getDenominatorValue() == 1);
+                REQUIRE(testFrac1.getNumerator() == 0);
+                REQUIRE(testFrac1.getDenominator() == 1);
             }
         }
 
@@ -428,8 +428,8 @@ SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
 
             THEN("we get nonpositive 0/1") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 0);
-                REQUIRE(testFrac2.getDenominatorValue() == 1);
+                REQUIRE(testFrac2.getNumerator() == 0);
+                REQUIRE(testFrac2.getDenominator() == 1);
             }
         }
     }
@@ -443,8 +443,8 @@ SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
 
             THEN("we get 5/6") {
                 REQUIRE(testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 5);
-                REQUIRE(testFrac1.getDenominatorValue() == 6);
+                REQUIRE(testFrac1.getNumerator() == 5);
+                REQUIRE(testFrac1.getDenominator() == 6);
             }
         }
 
@@ -454,8 +454,8 @@ SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
 
             THEN("we get -5/6") {
                 REQUIRE(!testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 5);
-                REQUIRE(testFrac2.getDenominatorValue() == 6);
+                REQUIRE(testFrac2.getNumerator() == 5);
+                REQUIRE(testFrac2.getDenominator() == 6);
             }
         }
 
@@ -465,8 +465,8 @@ SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
 
             THEN("we get 1/1") {
                 REQUIRE(testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 1);
-                REQUIRE(testFrac3.getDenominatorValue() == 1);
+                REQUIRE(testFrac3.getNumerator() == 1);
+                REQUIRE(testFrac3.getDenominator() == 1);
             }
         }
 
@@ -476,8 +476,8 @@ SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
 
             THEN("we get -2/3") {
                 REQUIRE(!testFrac5.positive());
-                REQUIRE(testFrac5.getNumeratorValue() == 2);
-                REQUIRE(testFrac5.getDenominatorValue() == 3);
+                REQUIRE(testFrac5.getNumerator() == 2);
+                REQUIRE(testFrac5.getDenominator() == 3);
             }
         }
     }
@@ -489,8 +489,8 @@ SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
 
             THEN("we get nonnegative 0/1") {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 0);
-                REQUIRE(testFrac1.getDenominatorValue() == 1);
+                REQUIRE(testFrac1.getNumerator() == 0);
+                REQUIRE(testFrac1.getDenominator() == 1);
             }
         }
     }
@@ -505,8 +505,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get nonegative 0/1") {
                 REQUIRE(!testFrac0.positive());
-                REQUIRE(testFrac0.getNumeratorValue() == 0);
-                REQUIRE(testFrac0.getDenominatorValue() == 1);
+                REQUIRE(testFrac0.getNumerator() == 0);
+                REQUIRE(testFrac0.getDenominator() == 1);
             }
         }
 
@@ -517,8 +517,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get -22/15") {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 22);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 22);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -529,8 +529,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get 22/15") {
                 REQUIRE(testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 22);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 22);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
     }
@@ -543,8 +543,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get nonnegative 0/1") {
                 REQUIRE(!testAdditiveInverse1.positive());
-                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse1.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominator() == 1);
             }
         }
 
@@ -555,8 +555,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get -2/15") {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 2);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 2);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -567,8 +567,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get 22/15") {
                 REQUIRE(testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 22);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 22);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
 
@@ -580,8 +580,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get 2/3") {
                 REQUIRE(testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 2);
-                REQUIRE(testFrac3.getDenominatorValue() == 3);
+                REQUIRE(testFrac3.getNumerator() == 2);
+                REQUIRE(testFrac3.getDenominator() == 3);
             }
         }
     }
@@ -594,8 +594,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get nonnegative 0/1") {
                 REQUIRE(!testAdditiveInverse1.positive());
-                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
-                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+                REQUIRE(testAdditiveInverse1.getNumerator() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominator() == 1);
             }
         }
 
@@ -606,8 +606,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get -22/15") {
                 REQUIRE(!testFrac1.positive());
-                REQUIRE(testFrac1.getNumeratorValue() == 22);
-                REQUIRE(testFrac1.getDenominatorValue() == 15);
+                REQUIRE(testFrac1.getNumerator() == 22);
+                REQUIRE(testFrac1.getDenominator() == 15);
             }
         }
 
@@ -618,8 +618,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get 2/15") {
                 REQUIRE(testFrac2.positive());
-                REQUIRE(testFrac2.getNumeratorValue() == 2);
-                REQUIRE(testFrac2.getDenominatorValue() == 15);
+                REQUIRE(testFrac2.getNumerator() == 2);
+                REQUIRE(testFrac2.getDenominator() == 15);
             }
         }
 
@@ -631,8 +631,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
             THEN("we get -2/3") {
                 REQUIRE(!testFrac3.positive());
-                REQUIRE(testFrac3.getNumeratorValue() == 2);
-                REQUIRE(testFrac3.getDenominatorValue() == 3);
+                REQUIRE(testFrac3.getNumerator() == 2);
+                REQUIRE(testFrac3.getDenominator() == 3);
             }
         }
     }
