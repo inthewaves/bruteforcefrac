@@ -107,10 +107,9 @@ public:
      * Adds @p toAdd to this RationalNumber.
      *
      * This fraction is changed and simplified after adding
-     * @example if x == 1/2 and we run x.add(3/4), then x == 5/4.
+     * @example Pseudocode: if x == 1/2 and we run x.add(3/4), then x == 5/4.
      * @param toAdd - The fraction to add to this rational number.
      *
-     * @todo Handle adding negative rationalnumbers
      */
     void add(RationalNum* toAdd) {
         if (toAdd) {
