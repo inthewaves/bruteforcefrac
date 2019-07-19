@@ -32,6 +32,11 @@ private:
     bool isPositive;
 
 public:
+    /**
+     * Constructor for when you want to pass in signed integers.
+     * @param numerator - The numerator.
+     * @param denominator - The denominator.
+     */
     RationalNum(int64_t numerator, int64_t denominator = 1) {
         if (numerator == 0) {
             this->numerator = 0;
@@ -47,6 +52,25 @@ public:
                 isPositive = true;
             else
                 isPositive = false;
+        }
+    }
+
+    /**
+     * Constructor for when you want to pass in a large RationalNumber with a sign.
+     * @param numerator - The numerator.
+     * @param denominator - The denominator.
+     * @param isPositive - The sign.
+     */
+    RationalNum(uint64_t numerator, uint64_t denominator, bool isPositive) {
+        if (numerator == 0) {
+            this->numerator = 0;
+            this->denominator = 1;
+            isPositive = false;
+        }
+        else {
+            this->numerator = numerator;
+            this->denominator = denominator;
+            this->isPositive = isPositive;
         }
     }
 
@@ -131,30 +155,37 @@ public:
                 denominator = toAdd->denominator;
             }
             else {
+                // To prevent side effects on toAdd, store the value
+                // of the numerator in a separate variable
+                uint64_t toAddCompatNumerator = toAdd->numerator;
+
                 // need common denominator
+                // e.g. to add 1/2 and 1/3, we need to do
+                // 1/2 = 1/2 * 3/3 = 3/6 and 1/3 = 1/3 * 2/2 = 2/6.
+                // But we can forget about changing toAdd->denominator as
+                // it's not used during the actual addition
                 if (toAdd->denominator != denominator) {
                     uint64_t oldDenom = denominator;
 
                     numerator *= toAdd->denominator;
                     denominator *= toAdd->denominator;
 
-                    toAdd->numerator *= oldDenom;
-                    toAdd->denominator *= oldDenom;
+                    toAddCompatNumerator *= oldDenom;
                 }
 
                 // adding two RationalNums of the same sign
                 if ((isPositive && toAdd->isPositive) || (!isPositive && !toAdd->isPositive)) {
-                    numerator += toAdd->numerator;
+                    numerator += toAddCompatNumerator;
                 }
                     // adding two RationalNums of different signs
-                    // e.g. 434 - 23 is straight forward,
-                    // but 23 - 434 = -(423 - 23).
+                    // e.g., 434 - 23 is straight forward,
+                    // but 23 - 434 = -(423 - 23)
                 else {
-                    if (numerator >= toAdd->numerator) {
-                        numerator -= toAdd->numerator;
+                    if (numerator >= toAddCompatNumerator) {
+                        numerator -= toAddCompatNumerator;
                     } else {
                         isPositive = toAdd->isPositive;
-                        numerator = toAdd->numerator - numerator;
+                        numerator = toAddCompatNumerator - numerator;
                     }
                 }
             }
@@ -185,10 +216,33 @@ public:
 
     /**
      * Subtracts @p toSubtr from this rational number.
-     * @param toSubtr - The fraction to subtract fromrational number.
+     * @param toSubtr - The fraction to subtract from rational number.
      */
     void subtract(RationalNum* toSubtr) {
+        if (toSubtr) {
+            RationalNum* neg_of_toSubtr = new RationalNum(toSubtr->numerator,
+                                                          toSubtr->denominator,
+                                                          !toSubtr->isPositive);
 
+            add(neg_of_toSubtr);
+
+            delete(neg_of_toSubtr);
+        }
+    }
+
+    /**
+     * Divides this by @p toSubtr.
+     * @param toSubtr - The fraction to divide by.
+     */
+    void divide(RationalNum* toDivide) {
+        if (toDivide && toDivide->numerator != 0) {
+            RationalNum* reciprocal_of_toDivide = new RationalNum(toDivide->denominator,
+                                                                  toDivide->numerator,
+                                                                  toDivide->isPositive);
+            multiply(reciprocal_of_toDivide);
+
+            delete(reciprocal_of_toDivide);
+        }
     }
 
     void print() {
