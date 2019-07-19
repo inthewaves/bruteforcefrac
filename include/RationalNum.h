@@ -21,6 +21,9 @@ namespace bffrac {
 
 /**
  * A class for rational numbers
+ *
+ * @note 0 is represented by 0/1 with isPositive == false.
+ * @note Anything with a denominator of 0 is undefined.
  */
 class RationalNum {
 private:
@@ -29,23 +32,22 @@ private:
     bool isPositive;
 
 public:
-    RationalNum(int64_t numerator, int64_t denominator) {
-        // Take the absolute value of the params
-        this->numerator = (uint64_t)(numerator >= 0 ? numerator : -1*numerator);
-        this->denominator = (uint64_t)(denominator >= 0 ? denominator : -1*denominator);
+    RationalNum(int64_t numerator, int64_t denominator = 1) {
+        if (numerator == 0) {
+            this->numerator = 0;
+            this->denominator = 1;
+            isPositive = false;
+        }
+        else {
+            // Take the absolute value of the params
+            this->numerator = (uint64_t) (numerator > 0 ? numerator : -1 * numerator);
+            this->denominator = (uint64_t) (denominator > 0 ? denominator : -1 * denominator);
 
-        if ( (numerator >= 0 && denominator >= 0) || (numerator < 0 && denominator < 0)) {
-            isPositive = true;
-        } else isPositive = false;
-    }
-
-    RationalNum(int64_t numerator) {
-        this->numerator = (uint64_t)(numerator >= 0 ? numerator : -1*numerator);
-        this->denominator = 1;
-
-        if (numerator >= 0) {
-            isPositive = true;
-        } else isPositive = false;
+            if ((numerator >= 0 && denominator >= 0) || (numerator < 0 && denominator < 0))
+                isPositive = true;
+            else
+                isPositive = false;
+        }
     }
 
     uint64_t getNumeratorValue() {return numerator;}
@@ -67,11 +69,13 @@ public:
 
     /**
      * Simplify the numerator and denominator via prime factorization.
+     *
+     * @note If the numerator is 0, this function will convert into the
+     * zero RationalNum: the nonpositive 0/1.
      */
     void simplify() {
         // Don't simplify easy/undefined fractions such as 1/34636, 14214/1, 0/123, 13/0
-        if (numerator > 1 && denominator > 1)
-        {
+        if (numerator > 1 && denominator > 1) {
             // Prime factorize the numerator and denominator
             std::vector<IntFactor*>* numeratorPrimeFactors = primeFactorizeToVector(numerator);
             std::vector<IntFactor*>* denominatorPrimeFactors = primeFactorizeToVector(denominator);
@@ -101,48 +105,90 @@ public:
             delete numeratorPrimeFactors;
             delete denominatorPrimeFactors;
         }
+
+        // 0 is represented by nonpositive 0/1
+        if (numerator == 0) {
+            denominator = 1;
+            isPositive = false;
+        }
+
     }
 
     /**
      * Adds @p toAdd to this RationalNumber.
      *
-     * This fraction is changed and simplified after adding
+     * This fraction is changed and simplified.
      * @example Pseudocode: if x == 1/2 and we run x.add(3/4), then x == 5/4.
      * @param toAdd - The fraction to add to this rational number.
      *
      */
     void add(RationalNum* toAdd) {
         if (toAdd && toAdd->numerator != 0 && toAdd->denominator != 0) {
-            // need common denominator
-            if (toAdd->denominator != denominator) {
-                uint64_t oldDenom = denominator;
-
-                numerator *= toAdd->denominator;
-                denominator *= toAdd->denominator;
-
-                toAdd->numerator *= oldDenom;
-                toAdd->denominator *= oldDenom;
+            // if this has numerator of 0, easy to add
+            if (numerator == 0) {
+                isPositive = toAdd->isPositive;
+                numerator = toAdd->numerator;
+                denominator = toAdd->denominator;
             }
-
-            // adding two RationalNums of the same sign
-            if ((isPositive && toAdd->isPositive) || (!isPositive && !toAdd->isPositive)) {
-                numerator += toAdd->numerator;
-            }
-            // adding two RationalNums of different signs
-            // e.g. 434 - 23 is straight forward,
-            // but 23 - 434 = -(423 - 23).
             else {
-                if (numerator >= toAdd->numerator) {
-                    numerator -= toAdd->numerator;
+                // need common denominator
+                if (toAdd->denominator != denominator) {
+                    uint64_t oldDenom = denominator;
+
+                    numerator *= toAdd->denominator;
+                    denominator *= toAdd->denominator;
+
+                    toAdd->numerator *= oldDenom;
+                    toAdd->denominator *= oldDenom;
                 }
+
+                // adding two RationalNums of the same sign
+                if ((isPositive && toAdd->isPositive) || (!isPositive && !toAdd->isPositive)) {
+                    numerator += toAdd->numerator;
+                }
+                    // adding two RationalNums of different signs
+                    // e.g. 434 - 23 is straight forward,
+                    // but 23 - 434 = -(423 - 23).
                 else {
-                    isPositive = toAdd->isPositive;
-                    numerator = toAdd->numerator - numerator;
+                    if (numerator >= toAdd->numerator) {
+                        numerator -= toAdd->numerator;
+                    } else {
+                        isPositive = toAdd->isPositive;
+                        numerator = toAdd->numerator - numerator;
+                    }
                 }
             }
 
             simplify();
         }
+    }
+
+    /**
+     * Replaces this RationalNum with product of this and @p toMult
+     *
+     * This fraction is changed and simplified.
+     *
+     * @note If either one of the RatNums has a zero numerator, then
+     *       this object will be changed into nonpositive 0/1.
+     *
+     * @param toMult - The fraction to multiply with
+     */
+    void multiply(RationalNum* toMult) {
+        if (toMult && toMult->denominator != 0) {
+            numerator *= toMult->numerator;
+            denominator *= toMult->denominator;
+            isPositive = (isPositive == toMult->isPositive) ? true : false;
+
+            simplify();
+        }
+    }
+
+    /**
+     * Subtracts @p toSubtr from this rational number.
+     * @param toSubtr - The fraction to subtract fromrational number.
+     */
+    void subtract(RationalNum* toSubtr) {
+
     }
 
     void print() {
