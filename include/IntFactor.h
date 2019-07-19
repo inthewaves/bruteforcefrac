@@ -53,8 +53,8 @@ namespace bffrac {
          * @return The value after using pow.
          */
         uint64_t getValue() {
-            if (base == 0) return 0;
             if (exponent == 0) return 1;
+            if (base == 0) return 0;
             if (exponent == 1) return base;
             return (uint64_t)(pow(base,exponent));
         }
