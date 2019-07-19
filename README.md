@@ -1,5 +1,5 @@
 # bruteforcefrac
-This is a header-only C++ library for simplifying rational numbers using brute-force prime 
+This is a header-only C++17 library for simplifying rational numbers using brute-force prime 
 factorization. The motivation for this project is to refresh myself on data structures and 
 to lay a foundation for a matrix row operations program.
 
@@ -9,8 +9,14 @@ The library also contains two unused data structures implementing recursive prim
 (IntFactorList and IntFactorTree). These data structures were created for review purposes.
 
 ## Using the library
+### Unit tests
+The unit tests directory, [`tests/`](tests/), contains examples of using this library. For
+instance, examples of RationalNum usage are located in 
+[`tests/test_rationalnum.cpp`](tests/test_rationalnum.cpp), including simplification, addition,
+subtraction, multiplication, and division.
+
 ### Minimal working example 
-Put all the header files in [`include`](include/) directory into one place, and make a `mwe.cpp` 
+Put all the header files in [`include/`](include/) directory into one place, and make a `mwe.cpp` 
 file  (or copy it from the [`examples/`](examples/) directory) with the following code:
 
 ```c++
@@ -63,7 +69,7 @@ Prime factorization is done with trial division. For normal usage with relativel
 factoring and simplification works fast on modern home computers.
 
 Take the prime number 12764787846358441471. Using the old implementations from the `mwe-list.cpp` and 
-`mwe-tree.cpp` files (found under the [examples/](examples/) directory), we have the following with 
+`mwe-tree.cpp` files (found under the [`examples/`](examples/) directory), we have the following with 
 the `time` command:
 ```console
 $ g++ -Wall -O3 mwe-tree.cpp -o mwe-tree 
