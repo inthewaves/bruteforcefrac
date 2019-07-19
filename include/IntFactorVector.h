@@ -62,11 +62,11 @@ namespace bffrac {
      * That is, divisor factor is put under all the factors and cancels with what
      * can be canceled.
      *
-     * For example, suppose we have list of [3^1, 5^3, 7^5]. This list is the "numerator".
+     * @example Suppose we have list of [3^1, 5^3, 7^5]. This list is the "numerator".
      * Now suppose that
      * - x == 5^4, so cancelWithFactor(x) turns the list into [3^1, 5^0, 7^5],
      *      and by side effects, x is turned into x == 5^1.
-     *      This is because (3 * 5^3 * 7^5) / (5^4) = (3 * 7^5) / (5).
+     *      This is because \f$(3 * 5^3 * 7^5) / (5^4) = (3 * 5^0 * 7^5) / (5).\f$
      * - x == 5^1, so cancelWithFactor(x) turns the list into [3^1, 5^0, 7^5]
      *      and x is turned into x == 5^0
      * - x == 5^3, so cancelWithFactor(x) turns the list into [3^1, 5^0, 7^5]
@@ -134,9 +134,14 @@ namespace bffrac {
     }
 
     /**
-     * Creates a vector of prime IntFactors.
-     * @param valToFactor - The positive integer to factor into prime factors
-     * @return A pointer to a vector<IntFactor*>
+     * Prime factorizes a positive integer and returns its canonical form
+     * as a vector.
+     *
+     * @example primeFactorizeToVector(702) returns a pointer to a vector<IntFactor*>
+     *          with elements {2,3^3,13}.
+     * @param valToFactor - The positive integer to factor into prime factors.
+     * @return A pointer to a vector<IntFactor*> containing the canonical form
+     *         of @p valToFactor.
      */
     std::vector<IntFactor*>* primeFactorizeToVector(uint64_t valToFactor) {
         auto vecOfPrimes = new std::vector<IntFactor*>;

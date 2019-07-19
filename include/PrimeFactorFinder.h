@@ -24,7 +24,7 @@ namespace bffrac {
  *
  * @param valToFactor - The value to prime factorize.
  * @return The smallest prime factor of valToFactor
- *          (which is \p valToFactor if it is prime).
+ *          (which is @p valToFactor if it is prime).
  */
 uint64_t getSmallestPrimeFactor(uint64_t valToFactor) {
     //  if valToFac is a composite integer then it has a prime divisor <= sqrt(valToFac)

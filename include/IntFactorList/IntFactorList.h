@@ -31,10 +31,10 @@ private:
     /**
      * @brief Recursively creates a factor list for a positive int.
      *
-     * The function recursively prime factorizes \p valToFactor, using the
+     * The function recursively prime factorizes @p valToFactor, using the
      * append method to add recursively add prime factors onto the list
      *
-     * @pre The list is empty, \p valToFactor is greater than 3
+     * @pre The list is empty, @p valToFactor is greater than 3
      * @param valToFactor - The value to prime factorize
      */
     void primeFactorizeRecurse(uint64_t valToFactor) {
@@ -245,11 +245,11 @@ public:
     }
 
     /**
-     * Replaces the list with the prime factorization of \p valToFactor.
+     * Replaces the list with the prime factorization of @p valToFactor.
      *
      * Basically a wrapper method for the recursion.
      * The list contains the canonical form of the positive
-     * integer \p valToFactor. For example, 60 = 2^2 * 3 * 5 is
+     * integer @p valToFactor. For example, 60 = 2^2 * 3 * 5 is
      * the canonical form of 60, so primeFactorize(60) creates
      * an IntFactorList with elements [2^2, 3, 5].
      *

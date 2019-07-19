@@ -77,10 +77,10 @@ public:
      * method is a brute-force trial division.
      *
      * @param fac - A IntFactor containing a positive integer to be factorized.
-     * @return An IntFactorTreeNode that is the root of the factor tree of \p fac.
+     * @return An IntFactorTreeNode that is the root of the factor tree of @p fac.
      */
     IntFactorTreeNode* primeFactorize(IntFactor* fac) {
-        //  newNode is the root of the prime factor tree for \p fac
+        //  newNode is the root of the prime factor tree for @p fac
         auto newNode = new IntFactorTreeNode(fac);
         uint64_t valToFac = newNode->factor->getValue();
 

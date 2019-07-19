@@ -22,7 +22,10 @@
 namespace bffrac {
 
 /**
- * A class for rational numbers
+ * @brief A class for handling rational numbers
+ *
+ * The class consists of unsigned integers for the numerator
+ * and denominator, and a bool to store the sign of this RationalNum.
  *
  * @note 0 is represented by 0/1 with isPositive == false.
  * @note Anything with a denominator of 0 is undefined.
@@ -35,9 +38,11 @@ private:
 
 public:
     /**
-     * Constructor for when you want to pass in signed integers.
+     * Construct a RationalNum using signed integers.
+     *
      * @param numerator - The numerator.
-     * @param denominator - The denominator.
+     * @param denominator - The denominator (must be nonzero).
+     * @throw std::invalid_argument if the denominator is 0.
      */
     RationalNum(int64_t numerator, int64_t denominator = 1) {
         if (denominator == 0) {
@@ -61,10 +66,13 @@ public:
     }
 
     /**
-     * Constructor for when you want to pass in a large RationalNumber with a sign.
+     * Construct a RationalNum using unsigned integers, explicitly
+     * denoting the sign of this RationalNum.
+     *
      * @param numerator - The numerator.
-     * @param denominator - The denominator.
+     * @param denominator - The denominator (must be nonzero).
      * @param isPositive - The sign.
+     * @throw std::invalid_argument if the denominator is 0.
      */
     RationalNum(uint64_t numerator, uint64_t denominator, bool isPositive) {
         if (denominator == 0) {
@@ -82,8 +90,16 @@ public:
         }
     }
 
+    /**
+     * Return the numerator of this RationalNum.
+     * @return numerator
+     */
     uint64_t getNumerator() {return numerator;}
 
+    /**
+     * Return the denominator of this RationalNum.
+     * @return denominator
+     */
     uint64_t getDenominator() {return denominator;}
 
     /**
@@ -93,10 +109,23 @@ public:
      */
     bool positive() {return isPositive;}
 
+    /**
+     * Changes the numerator of this RationalNum.
+     * @param numerator - The new numerator.
+     */
     void setNumerator(uint64_t numerator) {this->numerator = numerator;}
 
+    /**
+     * Changes the denominator of this RationalNum.
+     * @param denominator - The new denominator.
+     */
     void setDenominator(uint64_t denominator) {this->denominator = denominator;}
 
+
+    /**
+     * Changes the sign of this RationalNum.
+     * @param isPositive - The new sign of this RationalNum.
+     */
     void setPositive(bool isPositive) {this->isPositive = isPositive;}
 
     /**
@@ -149,7 +178,8 @@ public:
     /**
      * Adds @p toAdd to this RationalNumber.
      *
-     * This fraction is changed and simplified.
+     * This RationalNumber is changed and simplified.
+     *
      * @example Pseudocode: if x == 1/2 and we run x.add(3/4), then x == 5/4.
      * @param toAdd - The fraction to add to this rational number.
      *
@@ -205,7 +235,7 @@ public:
     /**
      * Replaces this RationalNum with product of this and @p toMult
      *
-     * This fraction is changed and simplified.
+     * This RationalNum is changed and simplified.
      *
      * @note If either one of the RatNums has a zero numerator, then
      *       this object will be changed into nonpositive 0/1.
