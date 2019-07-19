@@ -17,6 +17,8 @@
 
 #include <vector>
 
+#include <stdexcept>
+
 namespace bffrac {
 
 /**
@@ -38,10 +40,13 @@ public:
      * @param denominator - The denominator.
      */
     RationalNum(int64_t numerator, int64_t denominator = 1) {
-        if (numerator == 0) {
+        if (denominator == 0) {
+            throw std::invalid_argument("RationalNum: received zero denominator");
+        }
+        else if (numerator == 0) {
             this->numerator = 0;
             this->denominator = 1;
-            isPositive = false;
+            this->isPositive = false;
         }
         else {
             // Take the absolute value of the params
@@ -62,10 +67,13 @@ public:
      * @param isPositive - The sign.
      */
     RationalNum(uint64_t numerator, uint64_t denominator, bool isPositive) {
-        if (numerator == 0) {
+        if (denominator == 0) {
+            throw std::invalid_argument("RationalNum: received zero denominator");
+        }
+        else if (numerator == 0) {
             this->numerator = 0;
             this->denominator = 1;
-            isPositive = false;
+            this->isPositive = false;
         }
         else {
             this->numerator = numerator;

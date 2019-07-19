@@ -2,6 +2,23 @@
 
 #include "RationalNum.h"
 
+#include <stdexcept>
+
+SCENARIO( "Rational numbers cannot have zero denominator", "[rationalnum]" ) {
+    WHEN( "one tries to create 1/0" ) {
+        THEN( "an invalid_argument exception is thrown" ) {
+            bool didExceptionThrow = false;
+            try {
+                auto testFrac = bffrac::RationalNum(1,0);
+            }
+            catch (const std::invalid_argument& e) {
+                didExceptionThrow = true;
+            }
+            REQUIRE(didExceptionThrow);
+        }
+    }
+}
+
 SCENARIO( "Rational numbers have signs", "[rationalnum]" ) {
     WHEN( "we initialize (-5)/2 and 5/(-2)" ) {
         auto testFrac1 = bffrac::RationalNum(-5,2);
@@ -120,18 +137,16 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
         }
     }
 
-    GIVEN( "The rational numbers 0/1 and 1/0" ) {
-        auto testFrac1 = bffrac::RationalNum(0,1);
-        auto testFrac2 = bffrac::RationalNum(1,0);
+    GIVEN( "The rational numbers 0/65" ) {
+        auto testFrac1 = bffrac::RationalNum(0,65);
 
-        WHEN( "the rational numbers are simplified" ) {
-            testFrac1.simplify(); testFrac2.simplify();
+        WHEN( "the rational numbers is simplified" ) {
+            testFrac1.simplify();
 
-            THEN( "the numerators and denominators are unchanged (and no errors)" ) {
+            THEN( "0/65 is changed into the nonpositive 0/1" ) {
+                REQUIRE(!testFrac1.positive());
                 REQUIRE(testFrac1.getNumeratorValue() == 0);
                 REQUIRE(testFrac1.getDenominatorValue() == 1);
-                REQUIRE(testFrac2.getNumeratorValue() == 1);
-                REQUIRE(testFrac2.getDenominatorValue() == 0);
             }
         }
     }
@@ -289,8 +304,8 @@ SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
 
         auto testFrac3 = bffrac::RationalNum(-2,3);
 
-        WHEN( "we run (-2/3).add(0/0)" ) {
-            auto testFrac3add = bffrac::RationalNum(0,0);
+        WHEN( "we run (-2/3).add(0/13)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,13);
             testFrac3.add(&testFrac3add);
 
             THEN("we get -2/3") {
@@ -610,8 +625,8 @@ SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
 
         auto testFrac3 = bffrac::RationalNum(-2,3);
 
-        WHEN( "we run (-2/3).subtract(0/0)" ) {
-            auto testFrac3add = bffrac::RationalNum(0,0);
+        WHEN( "we run (-2/3).subtract(0/1)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,1);
             testFrac3.subtract(&testFrac3add);
 
             THEN("we get -2/3") {
