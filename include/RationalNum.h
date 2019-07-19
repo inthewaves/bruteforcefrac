@@ -52,6 +52,17 @@ public:
 
     uint64_t getDenominatorValue() {return denominator;}
 
+    void setNumerator(uint64_t numerator) {this->numerator = numerator;}
+
+    void setDenominator(uint64_t denominator) {this->denominator = denominator;}
+
+    void setPositive(bool isPositive) {this->isPositive = isPositive;}
+
+    /**
+     * Gets the sign of the rational number
+     * @return true if the rational number is positive,
+     *         otherwise returns false
+     */
     bool positive() {return isPositive;}
 
     /**
@@ -89,6 +100,48 @@ public:
 
             delete numeratorPrimeFactors;
             delete denominatorPrimeFactors;
+        }
+    }
+
+    /**
+     * Adds @p toAdd to this RationalNumber.
+     *
+     * This fraction is changed and simplified after adding
+     * @example Pseudocode: if x == 1/2 and we run x.add(3/4), then x == 5/4.
+     * @param toAdd - The fraction to add to this rational number.
+     *
+     */
+    void add(RationalNum* toAdd) {
+        if (toAdd && toAdd->numerator != 0 && toAdd->denominator != 0) {
+            // need common denominator
+            if (toAdd->denominator != denominator) {
+                uint64_t oldDenom = denominator;
+
+                numerator *= toAdd->denominator;
+                denominator *= toAdd->denominator;
+
+                toAdd->numerator *= oldDenom;
+                toAdd->denominator *= oldDenom;
+            }
+
+            // adding two RationalNums of the same sign
+            if ((isPositive && toAdd->isPositive) || (!isPositive && !toAdd->isPositive)) {
+                numerator += toAdd->numerator;
+            }
+            // adding two RationalNums of different signs
+            // e.g. 434 - 23 is straight forward,
+            // but 23 - 434 = -(423 - 23).
+            else {
+                if (numerator >= toAdd->numerator) {
+                    numerator -= toAdd->numerator;
+                }
+                else {
+                    isPositive = toAdd->isPositive;
+                    numerator = toAdd->numerator - numerator;
+                }
+            }
+
+            simplify();
         }
     }
 
