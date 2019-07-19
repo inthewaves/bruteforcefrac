@@ -112,7 +112,7 @@ public:
      *
      */
     void add(RationalNum* toAdd) {
-        if (toAdd) {
+        if (toAdd && toAdd->numerator != 0 && toAdd->denominator != 0) {
             // need common denominator
             if (toAdd->denominator != denominator) {
                 uint64_t oldDenom = denominator;
