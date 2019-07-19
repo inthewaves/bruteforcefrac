@@ -136,3 +136,491 @@ SCENARIO( "Rational numbers are simplified", "[rationalnum]" ) {
         }
     }
 }
+
+SCENARIO( "Sums of rational numbers", "[rationalnum][add]" ) {
+    GIVEN( "0/1" ) {
+        auto testFrac0 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).add(0/5)" ) {
+            testFrac0.add(new bffrac::RationalNum(0,5));
+
+            THEN("we get nonegative 0/1") {
+                REQUIRE(!testFrac0.positive());
+                REQUIRE(testFrac0.getNumeratorValue() == 0);
+                REQUIRE(testFrac0.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).add(22/15)" ) {
+            testFrac1.add(new bffrac::RationalNum(22,15));
+
+            THEN("we get 22/15") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 22);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).add(-22/15)" ) {
+            testFrac2.add(new bffrac::RationalNum(-22,15));
+
+            THEN("we get -22/15") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 22);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+    }
+
+    GIVEN( "2/3" ) {
+        auto testAdditiveInverse1 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).add(-2/3) (additive inverse)" ) {
+            testAdditiveInverse1.add(new bffrac::RationalNum(-2,3));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testAdditiveInverse1.positive());
+                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testAdditiveInverse2 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).add(-16/24) (additive inverse)" ) {
+            testAdditiveInverse1.add(new bffrac::RationalNum(-16,24));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testAdditiveInverse1.positive());
+                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).add(4/5)" ) {
+            testFrac1.add(new bffrac::RationalNum(4,5));
+
+            THEN("we get 22/15") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 22);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).add(-4/5)" ) {
+            testFrac2.add(new bffrac::RationalNum(-4,5));
+
+            THEN("we get -2/15") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 2);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).add(0/5)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,5);
+            testFrac3.add(&testFrac3add);
+
+            THEN("we get 2/3") {
+                REQUIRE(testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 2);
+                REQUIRE(testFrac3.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "-2/3" ) {
+
+        auto testAdditiveInverse1 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).add(2/3) (additive inverse)" ) {
+            testAdditiveInverse1.add(new bffrac::RationalNum(2,3));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testAdditiveInverse1.positive());
+                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testAdditiveInverse2 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).add(16/24) (additive inverse)" ) {
+            testAdditiveInverse2.add(new bffrac::RationalNum(16,24));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testAdditiveInverse2.positive());
+                REQUIRE(testAdditiveInverse2.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse2.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).add(4/5)" ) {
+            testFrac1.add(new bffrac::RationalNum(4,5));
+
+            THEN("we get 2/15") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 2);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).add(-4/5)" ) {
+            testFrac2.add(new bffrac::RationalNum(-4,5));
+
+            THEN("we get -22/15") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 22);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).add(0/0)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,0);
+            testFrac3.add(&testFrac3add);
+
+            THEN("we get -2/3") {
+                REQUIRE(!testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 2);
+                REQUIRE(testFrac3.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "5/10" ) {
+        auto testNoSideEffect = bffrac::RationalNum(5, 10);
+        WHEN("we run (5/10).add(-2/3)") {
+            auto testNoSideEffect_add = new bffrac::RationalNum(-2,3);
+            testNoSideEffect.add(testNoSideEffect_add);
+
+            THEN("we get -1/6") {
+                REQUIRE(!testNoSideEffect.positive());
+                REQUIRE(testNoSideEffect.getNumeratorValue() == 1);
+                REQUIRE(testNoSideEffect.getDenominatorValue() == 6);
+            }
+
+            AND_THEN("no side effects on -2/3") {
+                REQUIRE(!testNoSideEffect_add->positive());
+                REQUIRE(testNoSideEffect_add->getNumeratorValue() == 2);
+                REQUIRE(testNoSideEffect_add->getDenominatorValue() == 3);
+            }
+        }
+    }
+
+}
+
+SCENARIO( "Products of rational numbers", "[rationalnum][multiply]" ) {
+    GIVEN( "2/3" ) {
+        auto testFrac1 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).multiply(4/5)" ) {
+            testFrac1.multiply(new bffrac::RationalNum(4,5));
+
+            THEN("we get 8/15") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 8);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).multiply(-4/5)" ) {
+            testFrac2.multiply(new bffrac::RationalNum(-4,5));
+
+            THEN("we get -8/15") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 8);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).multiply(3/2) (multiplicative inverse)" ) {
+            testFrac3.multiply(new bffrac::RationalNum(3,2));
+
+            THEN("we get 1/1") {
+                REQUIRE(testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 1);
+                REQUIRE(testFrac3.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac4 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).multiply(0,1)" ) {
+            testFrac4.multiply(new bffrac::RationalNum(0,1));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testFrac4.positive());
+                REQUIRE(testFrac4.getNumeratorValue() == 0);
+                REQUIRE(testFrac4.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac5 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).multiply(-1)" ) {
+            testFrac5.multiply(new bffrac::RationalNum(-1));
+
+            THEN("we get -2/3") {
+                REQUIRE(!testFrac5.positive());
+                REQUIRE(testFrac5.getNumeratorValue() == 2);
+                REQUIRE(testFrac5.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "-2/3" ) {
+        auto testFrac1 = bffrac::RationalNum(-2, 3);
+
+        WHEN( "we run (2/3).multiply(-1)" ) {
+            testFrac1.multiply(new bffrac::RationalNum(-1));
+
+            THEN("we get 2/3") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 2);
+                REQUIRE(testFrac1.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "0/1" ) {
+        auto testFrac1 = bffrac::RationalNum(0,1);
+        WHEN("we run (0/1).multiply(4/5)") {
+            testFrac1.multiply(new bffrac::RationalNum(4, 5));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 0);
+                REQUIRE(testFrac1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(0,1);
+        WHEN("we run (0/1).multiply(-4/5)") {
+            testFrac1.multiply(new bffrac::RationalNum(-4, 5));
+
+            THEN("we get nonpositive 0/1") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 0);
+                REQUIRE(testFrac2.getDenominatorValue() == 1);
+            }
+        }
+    }
+}
+
+SCENARIO( "Quotients of rational numbers", "[rationalnum][divide]" ) {
+    GIVEN( "2/3" ) {
+        auto testFrac1 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).divide(4/5)" ) {
+            testFrac1.divide(new bffrac::RationalNum(4,5));
+
+            THEN("we get 5/6") {
+                REQUIRE(testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 5);
+                REQUIRE(testFrac1.getDenominatorValue() == 6);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).divide(-4/5)" ) {
+            testFrac2.divide(new bffrac::RationalNum(-4,5));
+
+            THEN("we get -5/6") {
+                REQUIRE(!testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 5);
+                REQUIRE(testFrac2.getDenominatorValue() == 6);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).divide(2/3) (multiplicative inverse)" ) {
+            testFrac3.divide(new bffrac::RationalNum(2,3));
+
+            THEN("we get 1/1") {
+                REQUIRE(testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 1);
+                REQUIRE(testFrac3.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac5 = bffrac::RationalNum(2,3);
+        WHEN( "we run (2/3).divide(-1)" ) {
+            testFrac5.divide(new bffrac::RationalNum(-1));
+
+            THEN("we get -2/3") {
+                REQUIRE(!testFrac5.positive());
+                REQUIRE(testFrac5.getNumeratorValue() == 2);
+                REQUIRE(testFrac5.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "0/1" ) {
+        auto testFrac1 = bffrac::RationalNum(0, 1);
+        WHEN("we run (0/1).divide(-1)") {
+            testFrac1.divide(new bffrac::RationalNum(-1));
+
+            THEN("we get nonnegative 0/1") {
+                REQUIRE(!testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 0);
+                REQUIRE(testFrac1.getDenominatorValue() == 1);
+            }
+        }
+    }
+}
+
+SCENARIO( "Differences of rational numbers", "[rationalnum][subtract]" ) {
+    GIVEN( "0/1" ) {
+        auto testFrac0 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).subtract(0/5)" ) {
+            testFrac0.subtract(new bffrac::RationalNum(0,5));
+
+            THEN("we get nonegative 0/1") {
+                REQUIRE(!testFrac0.positive());
+                REQUIRE(testFrac0.getNumeratorValue() == 0);
+                REQUIRE(testFrac0.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).subtract(22/15)" ) {
+            testFrac1.subtract(new bffrac::RationalNum(22,15));
+
+            THEN("we get -22/15") {
+                REQUIRE(!testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 22);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(0,1);
+
+        WHEN( "we run (0/1).subtract(-22/15)" ) {
+            testFrac2.subtract(new bffrac::RationalNum(-22,15));
+
+            THEN("we get 22/15") {
+                REQUIRE(testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 22);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+    }
+
+    GIVEN( "2/3" ) {
+        auto testAdditiveInverse1 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).subtract(2/3)" ) {
+            testAdditiveInverse1.subtract(new bffrac::RationalNum(2,3));
+
+            THEN("we get nonnegative 0/1") {
+                REQUIRE(!testAdditiveInverse1.positive());
+                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).add(4/5)" ) {
+            testFrac1.subtract(new bffrac::RationalNum(4,5));
+
+            THEN("we get -2/15") {
+                REQUIRE(!testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 2);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).subtract(-4/5)" ) {
+            testFrac2.subtract(new bffrac::RationalNum(-4,5));
+
+            THEN("we get 22/15") {
+                REQUIRE(testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 22);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(2,3);
+
+        WHEN( "we run (2/3).subtract(0/5)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,5);
+            testFrac3.subtract(&testFrac3add);
+
+            THEN("we get 2/3") {
+                REQUIRE(testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 2);
+                REQUIRE(testFrac3.getDenominatorValue() == 3);
+            }
+        }
+    }
+
+    GIVEN( "-2/3" ) {
+        auto testAdditiveInverse1 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).subtract(-2/3)" ) {
+            testAdditiveInverse1.subtract(new bffrac::RationalNum(-2,3));
+
+            THEN("we get nonnegative 0/1") {
+                REQUIRE(!testAdditiveInverse1.positive());
+                REQUIRE(testAdditiveInverse1.getNumeratorValue() == 0);
+                REQUIRE(testAdditiveInverse1.getDenominatorValue() == 1);
+            }
+        }
+
+        auto testFrac1 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).subtract(4/5)" ) {
+            testFrac1.subtract(new bffrac::RationalNum(4,5));
+
+            THEN("we get -22/15") {
+                REQUIRE(!testFrac1.positive());
+                REQUIRE(testFrac1.getNumeratorValue() == 22);
+                REQUIRE(testFrac1.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac2 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).subtract(-4/5)" ) {
+            testFrac2.subtract(new bffrac::RationalNum(-4,5));
+
+            THEN("we get 2/15") {
+                REQUIRE(testFrac2.positive());
+                REQUIRE(testFrac2.getNumeratorValue() == 2);
+                REQUIRE(testFrac2.getDenominatorValue() == 15);
+            }
+        }
+
+        auto testFrac3 = bffrac::RationalNum(-2,3);
+
+        WHEN( "we run (-2/3).subtract(0/0)" ) {
+            auto testFrac3add = bffrac::RationalNum(0,0);
+            testFrac3.subtract(&testFrac3add);
+
+            THEN("we get -2/3") {
+                REQUIRE(!testFrac3.positive());
+                REQUIRE(testFrac3.getNumeratorValue() == 2);
+                REQUIRE(testFrac3.getDenominatorValue() == 3);
+            }
+        }
+    }
+}
+
+
