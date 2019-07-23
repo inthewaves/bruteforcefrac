@@ -39,6 +39,7 @@ int main() {
     // "IntFactorVector.h"
     std::vector<bffrac::IntFactor*>* primeFactors = bffrac::primeFactorizeToVector(factorme);
     bffrac::printFacVec(primeFactors);
+    delete primeFactors;
 
     // "RationalNum.h"
     int64_t numer = 0; int64_t denom = 0;
