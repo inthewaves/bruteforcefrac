@@ -163,7 +163,12 @@ public:
             numerator = getValue(numeratorPrimeFactors);
             denominator = getValue(denominatorPrimeFactors);
 
+            for (IntFactor* factor : *numeratorPrimeFactors) delete factor;
+            numeratorPrimeFactors->clear();
             delete numeratorPrimeFactors;
+
+            for (IntFactor* factor : *denominatorPrimeFactors) delete factor;
+            denominatorPrimeFactors->clear();
             delete denominatorPrimeFactors;
         }
 
