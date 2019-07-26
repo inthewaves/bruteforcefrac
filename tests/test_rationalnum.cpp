@@ -1,8 +1,4 @@
-#include "catch.hpp"
-
-#include "RationalNum.h"
-
-#include <stdexcept>
+#include "test_all_include.h"
 
 SCENARIO( "Rational numbers cannot have zero denominator", "[rationalnum]" ) {
     WHEN( "one tries to create 1/0" ) {
