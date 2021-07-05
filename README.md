@@ -91,5 +91,7 @@ user    0m15.938s
 sys     0m0.000s
 ```
 
+Of course, the time will vary by the system you run on.
+
 ## License
 Licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.

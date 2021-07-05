@@ -11,7 +11,11 @@ include_directories(../include)
 enable_testing()
 
 # Add testing executables
-add_executable(unit_tests main.cpp test_rationalnum.cpp)
+add_executable(unit_tests
+        test_all_include.h
+        test_rationalnum.cpp
+        main.cpp
+        )
 
 target_link_libraries(unit_tests bruteforcefrac Catch2::Test)
 
